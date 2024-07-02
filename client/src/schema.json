@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "country": {
+      "type": "string",
+      "title": "Country"
+    },
+    "city": {
+      "type": "string",
+      "title": "City"
+    },
+    "username": {
+      "type": "string",
+      "title": "User name"
+    }
+  },
+  "required": ["country", "city", "username"]
+}

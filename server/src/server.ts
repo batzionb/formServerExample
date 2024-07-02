@@ -37,7 +37,6 @@ app.post(
     // Mock response for cities based on country
     const { formData } = req.body;
     const countryCode = formData.country;
-    console.log({ countryCode });
     const citiesByCountry: { [key: string]: string[] } = {
       ["United States"]: ["New York", "Los Angeles", "Chicago", "Houston"],
       ["Canada"]: ["Toronto", "Vancouver", "Montreal", "Calgary"],
@@ -46,7 +45,6 @@ app.post(
     };
 
     const cities = citiesByCountry[countryCode] || [];
-    console.log("cities", cities);
     res.json({
       data: {
         cities: cities,
@@ -55,20 +53,18 @@ app.post(
   }
 );
 
-app.post("/api/validate/username", (req, res) => {
+app.post("/validate-username", (req, res) => {
   // Mock response for username validation
-  const { username } = req.body;
+  const username = req.body.value;
   const existingUsernames = ["john_doe", "jane_doe", "user123"];
 
   if (existingUsernames.includes(username)) {
     res.json({
-      valid: false,
-      message: "Username is already taken",
+      errorMsg: "Username is already taken",
     });
   } else {
     res.json({
-      valid: true,
-      message: "Username is available",
+      errorMsg: null,
     });
   }
 });

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Form, { IChangeEvent } from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import { UiSchema, WidgetProps } from "@rjsf/utils";
+import { ErrorSchema, UiSchema, WidgetProps } from "@rjsf/utils";
 import { JSONSchema7 } from "json-schema";
 import CustomSelectWidget from "./CustomSelectWidget";
 import { ExtendedFormContext } from "./types";
@@ -18,13 +18,21 @@ const ExtendedForm: React.FC<ExtendedFormProps> = ({
   onSubmit,
   uiSchema,
 }) => {
-  const [formData, setFormData] = useState<object>({});
+  const [formData, setFormData] = useState<object>({
+    foo: {
+      __errors: ["some error that got added as a prop"],
+    },
+    candy: {
+      bar: {
+        __errors: ["some error that got added as a prop"],
+      },
+    },
+  });
   const [formContext, setFormContext] = useState<ExtendedFormContext>({
     loadingOptions: true,
     options: {},
   });
-
-  const onChange = async () => {};
+  const [extraErrors, setExtraErrors] = React.useState<ErrorSchema>({});
 
   const initialize = async () => {
     const allOptions: ExtendedFormContext["options"] = {};
@@ -56,8 +64,61 @@ const ExtendedForm: React.FC<ExtendedFormProps> = ({
     return null;
   };
 
+  const fetchValidateResult = async (
+    formData_: object,
+    fieldName: string,
+    fieldValue: string
+  ): Promise<string | null> => {
+    const url = uiSchema[fieldName]?.["validate:options"]?.url;
+    const jsonPath = uiSchema[fieldName]?.["validate:options"]?.jsonPath;
+    if (!url || !jsonPath) {
+      return null;
+    }
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify({
+          value: fieldValue,
+          formData: formData_,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+      if (!response.ok) {
+        console.error("Network response was not ok");
+        return null;
+      }
+      const data = await response.json();
+      const result = JSONPath({ path: jsonPath, json: data, wrap: false });
+      if (result !== null && typeof result !== "string") {
+        console.error("result type is not string, it's ", result);
+        return null;
+      }
+      return result as string;
+    } catch (error) {
+      console.error(`Error fetching options for ${url}:`, error);
+      return null;
+    }
+  };
+
+  const extraValidate = async (newFormData: object) => {
+    const extraErrors_: ErrorSchema<Record<string, object>> = {};
+    for (const [key, value] of Object.entries(newFormData)) {
+      const error = await fetchValidateResult(newFormData, key, value);
+      const key_ = key as string;
+      if (error !== null) {
+        extraErrors_[key_] = {
+          __errors: [error],
+        };
+      }
+    }
+    console.log("extraErrors", extraErrors_);
+    setExtraErrors(extraErrors_);
+  };
+
   const handleFormChange = async (e: IChangeEvent, id?: string) => {
-    console.log(id);
     if (!id) {
       return;
     }
@@ -89,6 +150,7 @@ const ExtendedForm: React.FC<ExtendedFormProps> = ({
       loadingOptions: false,
       options: allOptions,
     });
+    extraValidate(newFormData);
     setFormData(newFormData);
   };
 
@@ -97,8 +159,8 @@ const ExtendedForm: React.FC<ExtendedFormProps> = ({
     formData_: any
   ): Promise<string[] | null> => {
     const url = uiSchema[fieldName]?.["ui:options"]?.url;
-    const jqExpression = uiSchema[fieldName]?.["ui:options"]?.jqExpression;
-    if (!url || !jqExpression) {
+    const jsonPath = uiSchema[fieldName]?.["ui:options"]?.jsonPath;
+    if (!url || !jsonPath) {
       return null;
     }
 
@@ -117,7 +179,7 @@ const ExtendedForm: React.FC<ExtendedFormProps> = ({
         return null;
       }
       const { data } = await response.json();
-      const result = JSONPath({ path: jqExpression, json: data });
+      const result = JSONPath({ path: jsonPath, json: data, wrap: false });
       if (!Array.isArray(result)) {
         return null;
       }
@@ -140,6 +202,7 @@ const ExtendedForm: React.FC<ExtendedFormProps> = ({
         validator={validator}
         formContext={formContext}
         widgets={{ CustomSelectWidget: CustomSelectWidget }}
+        extraErrors={extraErrors}
       />
     </div>
   );

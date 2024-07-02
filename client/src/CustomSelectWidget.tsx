@@ -1,10 +1,4 @@
-import {
-  CircularProgress,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-} from "@mui/material";
+import { CircularProgress, FormControl, MenuItem, Select } from "@mui/material";
 import { WidgetProps } from "@rjsf/utils";
 import { JSONSchema7 } from "json-schema";
 import { ExtendedFormContext } from "./types";
@@ -12,7 +6,6 @@ import { ExtendedFormContext } from "./types";
 const CustomSelectWidget = ({
   value,
   onChange,
-  schema: widgetSchema,
   name,
   formContext,
 }: WidgetProps<object, JSONSchema7, ExtendedFormContext>) => {
@@ -21,7 +14,6 @@ const CustomSelectWidget = ({
   }
   return (
     <FormControl fullWidth>
-      <InputLabel>{widgetSchema.title}</InputLabel>
       <Select
         value={value || ""}
         onChange={(event) => onChange(event.target.value)}

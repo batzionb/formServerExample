@@ -1,0 +1,23 @@
+{
+  "country": {
+    "ui:widget": "CustomSelectWidget",
+    "ui:options": {
+      "url": "http://localhost:4000/countries",
+      "jsonPath": "$.countries[*].name",
+      "dependencies": ["city"]
+    }
+  },
+  "city": {
+    "ui:widget": "CustomSelectWidget",
+    "ui:options": {
+      "url": "http://localhost:4000/cities",
+      "jsonPath": "$.cities"
+    }
+  },
+  "username": {
+    "validate:options": {
+      "url": "http://localhost:4000/validate-username",
+      "jsonPath": "$.errorMsg"
+    }
+  }
+}
