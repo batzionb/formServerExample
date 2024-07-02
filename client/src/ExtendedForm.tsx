@@ -9,25 +9,11 @@ import DynamicDropdown from "./DynamicDropdown";
 
 interface ExtendedFormProps {
   schema: JSONSchema7;
-  onSubmit: (formData: any) => void;
   uiSchema: UiSchema;
 }
 
-const ExtendedForm: React.FC<ExtendedFormProps> = ({
-  schema,
-  onSubmit,
-  uiSchema,
-}) => {
-  const [formData, setFormData] = useState<object>({
-    foo: {
-      __errors: ["some error that got added as a prop"],
-    },
-    candy: {
-      bar: {
-        __errors: ["some error that got added as a prop"],
-      },
-    },
-  });
+const ExtendedForm: React.FC<ExtendedFormProps> = ({ schema, uiSchema }) => {
+  const [formData, setFormData] = useState<object>({});
   const [formContext, setFormContext] = useState<ExtendedFormContext>({
     loadingOptions: true,
     options: {},
@@ -51,9 +37,6 @@ const ExtendedForm: React.FC<ExtendedFormProps> = ({
   React.useEffect(() => {
     initialize();
   }, []);
-  const handleSubmit = ({ formData }: any) => {
-    onSubmit(formData);
-  };
 
   const findId = (id: string, idSchema: { [key: string]: { $id: string } }) => {
     for (const [key, value] of Object.entries(idSchema)) {
@@ -191,20 +174,25 @@ const ExtendedForm: React.FC<ExtendedFormProps> = ({
   };
 
   return (
-    <div>
-      <h1>Dynamic Form Example</h1>
-      <Form<object, JSONSchema7, ExtendedFormContext>
-        schema={schema}
-        uiSchema={uiSchema}
-        formData={formData}
-        onChange={handleFormChange}
-        onSubmit={handleSubmit}
-        validator={validator}
-        formContext={formContext}
-        widgets={{ DynamicDropdown: DynamicDropdown }}
-        extraErrors={extraErrors}
-      />
-    </div>
+    <Form<object, JSONSchema7, ExtendedFormContext>
+      schema={schema}
+      uiSchema={uiSchema}
+      formData={formData}
+      onChange={handleFormChange}
+      onSubmit={({ errors }) => {
+        if (errors.length) {
+          alert("Please fix errors");
+        } else {
+          alert("Form submitted successfully");
+        }
+      }}
+      validator={validator}
+      formContext={formContext}
+      widgets={{ DynamicDropdown: DynamicDropdown }}
+      extraErrors={extraErrors}
+      extraErrorsBlockSubmit={true}
+      showErrorList={false}
+    />
   );
 };
 

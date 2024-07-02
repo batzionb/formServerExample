@@ -6,7 +6,6 @@
     }
   },
   "email": {
-    "ui:widget": "email",
     "ui:placeholder": "Enter your email",
     "ui:help": "Please enter a valid email address."
   },
