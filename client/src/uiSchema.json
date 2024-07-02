@@ -1,4 +1,15 @@
 {
+  "username": {
+    "validate:options": {
+      "url": "http://localhost:4000/validate-username",
+      "jsonPath": "$.errorMsg"
+    }
+  },
+  "email": {
+    "ui:widget": "email",
+    "ui:placeholder": "Enter your email",
+    "ui:help": "Please enter a valid email address."
+  },
   "country": {
     "ui:widget": "DynamicDropdown",
     "ui:options": {
@@ -12,12 +23,6 @@
     "ui:options": {
       "url": "http://localhost:4000/cities",
       "jsonPath": "$.cities"
-    }
-  },
-  "username": {
-    "validate:options": {
-      "url": "http://localhost:4000/validate-username",
-      "jsonPath": "$.errorMsg"
     }
   }
 }

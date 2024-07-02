@@ -1,6 +1,23 @@
 {
   "type": "object",
   "properties": {
+    "age": {
+      "type": "integer",
+      "title": "Age",
+      "minimum": 18,
+      "maximum": 120,
+      "default": 18
+    },
+    "email": {
+      "type": "string",
+      "title": "Email",
+      "format": "email"
+    },
+    "agreeToTerms": {
+      "type": "boolean",
+      "title": "Agree to Terms",
+      "const": true
+    },
     "country": {
       "type": "string",
       "title": "Country",
@@ -16,27 +33,7 @@
     "username": {
       "type": "string",
       "title": "User name",
-      "pattern": "^[a-zA-Z0-9_]{3,15}$",
-      "description": "Username should be 3-15 characters long and can contain letters, numbers, and underscores."
-    },
-    "age": {
-      "type": "integer",
-      "title": "Age",
-      "minimum": 18,
-      "maximum": 120,
-      "default": 18
-    },
-    "email": {
-      "type": "string",
-      "title": "Email",
-      "format": "email",
-      "description": "Please enter a valid email address."
-    },
-    "agreeToTerms": {
-      "type": "boolean",
-      "title": "Agree to Terms",
-      "const": true,
-      "description": "You must agree to the terms and conditions."
+      "pattern": "^[a-zA-Z0-9_]{3,15}$"
     }
   },
   "required": ["country", "city", "username", "age", "email", "agreeToTerms"]
