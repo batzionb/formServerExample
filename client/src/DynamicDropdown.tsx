@@ -1,4 +1,3 @@
-import { CircularProgress, FormControl, MenuItem, Select } from "@mui/material";
 import { WidgetProps } from "@rjsf/utils";
 import { JSONSchema7 } from "json-schema";
 import { ExtendedFormContext } from "./types";
@@ -12,26 +11,35 @@ const DynamicDropdownWidget = ({
   if (!formContext) {
     return null;
   }
+
   return (
-    <FormControl fullWidth>
-      <Select
+    <div style={{ width: "100%" }}>
+      <select
         value={value || ""}
         onChange={(event) => onChange(event.target.value)}
-        disabled={false}
+        disabled={formContext.loadingOptions || !formContext.options[name]}
+        style={{
+          width: "100%",
+          padding: "10px",
+          borderRadius: "4px",
+          border: "1px solid #ccc",
+        }}
       >
-        {formContext?.loadingOptions || !formContext.options[name] ? (
-          <MenuItem value="">
-            <CircularProgress size={20} />
-          </MenuItem>
+        {formContext.loadingOptions || !formContext.options[name] ? (
+          <option value="" disabled>
+            Loading...
+          </option>
         ) : (
-          formContext.options[name].map((option: any, index: number) => (
-            <MenuItem key={index} value={option}>
-              {option}
-            </MenuItem>
-          ))
+          [...formContext.options[name], ""].map(
+            (option: any, index: number) => (
+              <option key={index} value={option}>
+                {option}
+              </option>
+            )
+          )
         )}
-      </Select>
-    </FormControl>
+      </select>
+    </div>
   );
 };
 

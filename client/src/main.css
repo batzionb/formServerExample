@@ -1,7 +1,98 @@
-.form-group {
-  margin-bottom: 1rem;
-}
-
 .required {
   color: red;
+}
+
+/* form.css */
+
+/* Form container */
+.rjsf {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Form title */
+.rjsf h1,
+.rjsf h2,
+.rjsf h3 {
+  color: #333;
+  margin-bottom: 20px;
+  font-family: "Arial", sans-serif;
+}
+
+/* Form field */
+.rjsf .form-group {
+  margin-bottom: 20px;
+}
+
+/* Field label */
+.rjsf .control-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Field input */
+.rjsf .form-control {
+  display: block;
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* Select input */
+.rjsf select.form-control {
+  height: auto;
+}
+
+/* Checkbox */
+.rjsf .checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.rjsf .checkbox label {
+  margin-left: 5px;
+}
+
+/* Help text */
+.rjsf .help-block {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  color: #666;
+}
+
+/* Error messages */
+.rjsf .text-danger {
+  color: #d9534f;
+}
+
+/* Submit button */
+.rjsf .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #007bff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  font-family: "Arial", sans-serif;
+  text-decoration: none;
+}
+
+.rjsf .btn:hover {
+  background-color: #0056b3;
 }

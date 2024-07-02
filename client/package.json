@@ -10,9 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
-    "@mui/material": "^5.15.20",
     "@rjsf/core": "^5.18.5",
     "@rjsf/utils": "^5.18.5",
     "@rjsf/validator-ajv8": "^5.18.5",
