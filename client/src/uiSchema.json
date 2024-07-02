@@ -1,6 +1,6 @@
 {
   "country": {
-    "ui:widget": "CustomSelectWidget",
+    "ui:widget": "DynamicDropdown",
     "ui:options": {
       "url": "http://localhost:4000/countries",
       "jsonPath": "$.countries[*].name",
@@ -8,7 +8,7 @@
     }
   },
   "city": {
-    "ui:widget": "CustomSelectWidget",
+    "ui:widget": "DynamicDropdown",
     "ui:options": {
       "url": "http://localhost:4000/cities",
       "jsonPath": "$.cities"

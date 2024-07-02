@@ -3,7 +3,7 @@ import { WidgetProps } from "@rjsf/utils";
 import { JSONSchema7 } from "json-schema";
 import { ExtendedFormContext } from "./types";
 
-const CustomSelectWidget = ({
+const DynamicDropdownWidget = ({
   value,
   onChange,
   name,
@@ -35,4 +35,4 @@ const CustomSelectWidget = ({
   );
 };
 
-export default CustomSelectWidget;
+export default DynamicDropdownWidget;

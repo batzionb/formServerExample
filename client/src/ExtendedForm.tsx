@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Form, { IChangeEvent } from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import { ErrorSchema, UiSchema, WidgetProps } from "@rjsf/utils";
+import { ErrorSchema, UiSchema } from "@rjsf/utils";
 import { JSONSchema7 } from "json-schema";
-import CustomSelectWidget from "./CustomSelectWidget";
 import { ExtendedFormContext } from "./types";
 import { JSONPath } from "jsonpath-plus";
+import DynamicDropdown from "./DynamicDropdown";
 
 interface ExtendedFormProps {
   schema: JSONSchema7;
@@ -201,7 +201,7 @@ const ExtendedForm: React.FC<ExtendedFormProps> = ({
         onSubmit={handleSubmit}
         validator={validator}
         formContext={formContext}
-        widgets={{ CustomSelectWidget: CustomSelectWidget }}
+        widgets={{ DynamicDropdown: DynamicDropdown }}
         extraErrors={extraErrors}
       />
     </div>

@@ -20,7 +20,6 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 app.post("/countries", (req, res) => {
-  console.log(res);
   res.json({
     data: {
       countries: countries,
