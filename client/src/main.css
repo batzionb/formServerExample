@@ -96,3 +96,9 @@
 .rjsf .btn:hover {
   background-color: #0056b3;
 }
+
+.rjsf .error-detail {
+  list-style-type: none;
+  margin: 2px;
+  padding: unset;
+}
